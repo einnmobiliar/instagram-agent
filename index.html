@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Post Generator - Complete Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+        }
+
+        .code-block {
+            position: relative;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+            color: white;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .step {
+            background: #e3f2fd;
+            border-left: 5px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .file-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .download-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .container { padding: 10px; }
+            .section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Instagram Post Generator</h1>
+            <p class="subtitle">Complete Python Project for Beginners</p>
+        </header>
+
+        <div class="section">
+            <h2>📋 Table of Contents</h2>
+            <div class="toc">
+                <a href="#overview">1. Project Overview</a>
+                <a href="#setup">2. Setup Instructions</a>
+                <a href="#files">3. All Project Files</a>
+                <a href="#testing">4. Testing Guide</a>
+                <a href="#usage">5. How to Use</a>
+                <a href="#troubleshooting">6. Troubleshooting</a>
+            </div>
+        </div>
+
+        <div class="section" id="overview">
+            <h2>🎯 Project Overview</h2>
+            <p>This project automatically creates and posts content to Instagram using AI. It generates engaging posts with images and captions, then publishes them to your account.</p>
+            
+            <div class="warning">
+                <strong>⚠️ Important:</strong> This is a beginner-friendly educational project. Always follow Instagram's terms of service and use official APIs for production applications.
+            </div>
+
+            <h3>What You'll Learn:</h3>
+            <ul>
+                <li>Python programming basics</li>
+                <li>Working with APIs</li>
+                <li>Automated content creation</li>
+                <li>Testing your code</li>
+                <li>Project organization</li>
+            </ul>
+        </div>
+
+        <div class="section" id="setup">
+            <h2>⚙️ Setup Instructions for Complete Beginners</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Install Python</strong>
+                <p>Go to <a href="https://python.org" target="_blank">python.org</a> and download Python 3.8 or higher. During installation, check "Add Python to PATH".</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Create a Project Folder</strong>
+                <p>Create a new folder on your desktop called <code>instagram_poster</code></p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Save All Files</strong>
+                <p>Copy each file from this page and save it in your project folder with the exact name shown.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Install Dependencies</strong>
+                <p>Open Command Prompt (Windows) or Terminal (Mac/Linux), navigate to your project folder, and run:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        Command
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre>pip install -r requirements.txt</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Configure Environment</strong>
+                <p>Copy <code>.env.example</code> to <code>.env</code> and add your API keys:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        Command
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre>cp .env.example .env</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="files">
+            <h2>📁 All Project Files</h2>
+            <p>Below are ALL the files you need. Click the copy button for each code block and save with the correct filename.</p>
+
+            <h3>Main Application Files</h3>
+            <div class="file-grid">
+                <div class="file-card">
+                    <h4>main.py</h4>
+                    <p>Main entry point</p>
+                </div>
+                <div class="file-card">
+                    <h4>content_generator.py</h4>
+                    <p>Creates post content</p>
+                </div>
+                <div class="file-card">
+                    <h4>image_generator.py</h4>
+                    <p>Creates images</p>
+                </div>
+                <div class="file-card">
+                    <h4>instagram_poster.py</h4>
+                    <p>Posts to Instagram</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    main.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Instagram Post Generator - Main Entry Point
+Usage: python main.py
+"""
+
+import os
+import logging
+from datetime import datetime
+from content_generator import ContentGenerator
+from image_generator import ImageGenerator
+from instagram_poster import InstagramPoster
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+
+def main():
+    """Main function to generate and post Instagram content."""
+    logger.info("🚀 Starting Instagram Post Generator...")
+    
+    try:
+        # Initialize components
+        content_gen = ContentGenerator()
+        image_gen = ImageGenerator()
+        poster = InstagramPoster()
+        
+        # Generate content
+        logger.info("📝 Generating content...")
+        caption = content_gen.generate_caption()
+        hashtags = content_gen.generate_hashtags()
+        
+        # Generate image
+        logger.info("🎨 Creating image...")
+        image_path = image_gen.create_image(caption)
+        
+        # Combine caption and hashtags
+        full_caption = f"{caption}\n\n{hashtags}"
+        
+        # Post to Instagram
+        logger.info("📱 Posting to Instagram...")
+        success = poster.post(image_path, full_caption)
+        
+        if success:
+            logger.info("✅ Successfully posted to Instagram!")
+        else:
+            logger.error("❌ Failed to post to Instagram")
+            
+    except Exception as e:
+        logger.error(f"❌ Error in main process: {e}")
+        raise
+
+
+if __name__ == "__main__":
+    main()</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    content_generator.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Content Generator Module
+Creates engaging captions and hashtags for Instagram posts
+"""
+
+import random
+import logging
+from typing import List
+
+logger = logging.getLogger(__name__)
+
+
+class ContentGenerator:
+    """Generates Instagram content including captions and hashtags."""
+    
+    def __init__(self):
+        """Initialize the content generator with templates."""
+        self.caption_templates = [
+            "Today's inspiration: {topic}! {emoji} {call_to_action}",
+            "✨ {topic} makes life better! {call_to_action}",
+            "Did you know? {fact} {emoji} {call_to_action}",
+            "{topic} is the key to happiness! {emoji}",
+            "Transform your day with {topic}! {call_to_action}"
+        ]
+        
+        self.topics = [
+            "positive thinking", "gratitude", "mindfulness", "self-care",
+            "productivity", "creativity", "learning", "growth"
+        ]
+        
+        self.emojis = ["🌟", "💫", "🌈", "🦋", "🌸", "✨", "🎯", "💪"]
+        
+        self.call_to_actions = [
+            "What's your favorite way to practice this?",
+            "Tag someone who needs to see this!",
+            "Save this for later!",
+            "Double tap if you agree!",
+            "Share your thoughts below!"
+        ]
+        
+        self.facts = [
+            "Taking 5 minutes to reflect can boost your mood",
+            "Small daily habits create big changes",
+            "Your mindset shapes your reality",
+            "Gratitude increases happiness by 25%"
+        ]
+        
+        self.hashtag_pools = {
+            "general": ["#inspiration", "#motivation", "#dailyinspiration", "#positivity"],
+            "wellness": ["#wellness", "#selfcare", "#mindfulness", "#mentalhealth"],
+            "growth": ["#personalgrowth", "#selfimprovement", "#mindset", "#success"]
+        }
+    
+    def generate_caption(self) -> str:
+        """
+        Generate an Instagram caption.
+        
+        Returns:
+            str: Generated caption
+        """
+        logger.info("Generating caption...")
+        
+        template = random.choice(self.caption_templates)
+        topic = random.choice(self.topics)
+        emoji = random.choice(self.emojis)
+        call_to_action = random.choice(self.call_to_actions)
+        
+        # Handle fact-based templates
+        if "{fact}" in template:
+            fact = random.choice(self.facts)
+            caption = template.format(
+                topic=topic,
+                emoji=emoji,
+                call_to_action=call_to_action,
+                fact=fact
+            )
+        else:
+            caption = template.format(
+                topic=topic.capitalize(),
+                emoji=emoji,
+                call_to_action=call_to_action
+            )
+        
+        logger.info(f"Generated caption: {caption[:50]}...")
+        return caption
+    
+    def generate_hashtags(self, category: str = None) -> str:
+        """
+        Generate relevant hashtags.
+        
+        Args:
+            category: Optional category to focus hashtags
+            
+        Returns:
+            str: Space-separated hashtags
+        """
+        logger.info("Generating hashtags...")
+        
+        if category and category in self.hashtag_pools:
+            hashtags = self.hashtag_pools[category]
+        else:
+            # Mix from all pools
+            hashtags = []
+            for pool in self.hashtag_pools.values():
+                hashtags.extend(pool)
+        
+        # Select random hashtags
+        selected = random.sample(hashtags, min(8, len(hashtags)))
+        
+        # Add trending hashtags
+        trending = ["#instagood", "#photooftheday", "#picoftheday"]
+        selected.extend(random.sample(trending, 2))
+        
+        result = " ".join(set(selected))
+        logger.info(f"Generated hashtags: {result}")
+        return result
+    
+    def generate_content_batch(self, count: int = 5) -> List[dict]:
+        """
+        Generate multiple content pieces.
+        
+        Args:
+            count: Number of content pieces to generate
+            
+        Returns:
+            List[dict]: List of content dictionaries
+        """
+        logger.info(f"Generating content batch of {count}...")
+        
+        contents = []
+        for i in range(count):
+            content = {
+                "id": i + 1,
+                "caption": self.generate_caption(),
+                "hashtags": self.generate_hashtags()
+            }
+            contents.append(content)
+        
+        return contents
+
+
+# Example usage
+if __name__ == "__main__":
+    generator = ContentGenerator()
+    print("Generated Caption:")
+    print(generator.generate_caption())
+    print("\nGenerated Hashtags:")
+    print(generator.generate_hashtags())</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    image_generator.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Image Generator Module
+Creates images for Instagram posts
+"""
+
+import os
+import random
+import logging
+from PIL import Image, ImageDraw, ImageFont
+from datetime import datetime
+
+logger = logging.getLogger(__name__)
+
+
+class ImageGenerator:
+    """Generates images for Instagram posts."""
+    
+    def __init__(self, output_dir: str = "output"):
+        """Initialize the image generator."""
+        self.output_dir = output_dir
+        self.size = (1080, 1080)  # Instagram post size
+        self.colors = [
+            "#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A",
+            "#98D8C8", "#F7DC6F", "#BB8FCE", "#85C1E2"
+        ]
+        
+        # Create output directory
+        os.makedirs(self.output_dir, exist_ok=True)
+        
+        # Try to load a font
+        try:
+            self.font_large = ImageFont.truetype("/System/Library/Fonts/Arial.ttf", 60)
+            self.font_small = ImageFont.truetype("/System/Library/Fonts/Arial.ttf", 30)
+        except:
+            logger.warning("Could not load system fonts, using default")
+            self.font_large = None
+            self.font_small = None
+    
+    def create_image(self, text: str = None) -> str:
+        """
+        Create an Instagram-ready image.
+        
+        Args:
+            text: Optional text to include
+            
+        Returns:
+            str: Path to created image
+        """
+        logger.info("Creating image...")
+        
+        # Create base image
+        image = Image.new('RGB', self.size, color=random.choice(self.colors))
+        draw = ImageDraw.Draw(image)
+        
+        # Add gradient overlay
+        self._add_gradient(image)
+        
+        # Add text if provided
+        if text:
+            self._add_text(image, draw, text)
+        
+        # Add decorative elements
+        self._add_decorations(draw)
+        
+        # Save image
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"instagram_post_{timestamp}.jpg"
+        filepath = os.path.join(self.output_dir, filename)
+        
+        image.save(filepath, 'JPEG', quality=95)
+        logger.info(f"Image saved to: {filepath}")
+        
+        return filepath
+    
+    def _add_gradient(self, image: Image.Image):
+        """Add a gradient overlay to the image."""
+        overlay = Image.new('RGBA', self.size, (0, 0, 0, 0))
+        overlay_draw = ImageDraw.Draw(overlay)
+        
+        # Create vertical gradient
+        for y in range(self.size[1]):
+            alpha = int(50 * (1 - y / self.size[1]))
+            overlay_draw.line([(0, y), (self.size[0], y)], fill=(0, 0, 0, alpha))
+        
+        # Apply overlay
+        image.paste(Image.alpha_composite(image.convert('RGBA'), overlay).convert('RGB'), (0, 0))
+    
+    def _add_text(self, image: Image.Image, draw: ImageDraw.Draw, text: str):
+        """Add text to the image."""
+        # Truncate text if too long
+        if len(text) > 100:
+            text = text[:97] + "..."
+        
+        # Calculate text position (center)
+        bbox = draw.textbbox((0, 0), text, font=self.font_large)
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+        
+        x = (self.size[0] - text_width) // 2
+        y = (self.size[1] - text_height) // 2
+        
+        # Add text shadow
+        draw.text((x + 3, y + 3), text, fill=(0, 0, 0, 128), font=self.font_large)
+        
+        # Add main text
+        draw.text((x, y), text, fill=(255, 255, 255), font=self.font_large)
+    
+    def _add_decorations(self, draw: ImageDraw.Draw):
+        """Add decorative elements."""
+        # Add corner decorations
+        corners = [
+            (50, 50), (self.size[0] - 50, 50),
+            (50, self.size[1] - 50), (self.size[0] - 50, self.size[1] - 50)
+        ]
+        
+        for x, y in corners:
+            size = 30
+            draw.ellipse([x - size, y - size, x + size, y + size],
+                        outline=(255, 255, 255, 200), width=3)
+    
+    def create_quote_image(self, quote: str, author: str = None) -> str:
+        """
+        Create an image with a quote.
+        
+        Args:
+            quote: The quote text
+            author: Optional author name
+            
+        Returns:
+            str: Path to created image
+        """
+        logger.info("Creating quote image...")
+        
+        # Format the full text
+        text = f'"{quote}"'
+        if author:
+            text += f"\n- {author}"
+        
+        return self.create_image(text)
+
+
+# Example usage
+if __name__ == "__main__":
+    generator = ImageGenerator()
+    image_path = generator.create_image("Stay Positive!")
+    print(f"Created image: {image_path}")</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    instagram_poster.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Instagram Poster Module
+Handles posting content to Instagram
+"""
+
+import logging
+from typing import Optional
+
+logger = logging.getLogger(__name__)
+
+
+class InstagramPoster:
+    """Handles Instagram posting functionality."""
+    
+    def __init__(self, use_sandbox: bool = True):
+        """
+        Initialize the poster.
+        
+        Args:
+            use_sandbox: If True, simulate posting without actual API calls
+        """
+        self.use_sandbox = use_sandbox
+        self.posted_count = 0
+    
+    def post(self, image_path: str, caption: str) -> bool:
+        """
+        Post content to Instagram.
+        
+        Args:
+            image_path: Path to the image file
+            caption: Post caption
+            
+        Returns:
+            bool: Success status
+        """
+        logger.info("Posting to Instagram...")
+        
+        if self.use_sandbox:
+            logger.info("📝 Sandbox mode - simulating post")
+            success = self._simulate_post(image_path, caption)
+        else:
+            success = self._real_post(image_path, caption)
+        
+        if success:
+            self.posted_count += 1
+            logger.info(f"✅ Successfully posted (Total posts: {self.posted_count})")
+        else:
+            logger.error("❌ Failed to post")
+        
+        return success
+    
+    def _simulate_post(self, image_path: str, caption: str) -> bool:
+        """
+        Simulate posting (for testing).
+        
+        Args:
+            image_path: Path to image
+            caption: Post caption
+            
+        Returns:
+            bool: Always True in sandbox mode
+        """
+        logger.info("Simulating Instagram post...")
+        logger.info(f"Image: {image_path}")
+        logger.info(f"Caption: {caption[:50]}...")
+        
+        # Simulate API delay
+        import time
+        time.sleep(1)
+        
+        return True
+    
+    def _real_post(self, image_path: str, caption: str) -> bool:
+        """
+        Real Instagram posting (requires API setup).
+        
+        Args:
+            image_path: Path to image
+            caption: Post caption
+            
+        Returns:
+            bool: Success status
+        """
+        logger.warning("Real posting not implemented - using sandbox mode")
+        logger.info("To implement real posting:")
+        logger.info("1. Get Instagram Basic Display API access")
+        logger.info("2. Implement OAuth authentication")
+        logger.info("3. Use Instagram Graph API")
+        
+        # For now, fall back to sandbox
+        return self._simulate_post(image_path, caption)
+    
+    def get_post_count(self) -> int:
+        """Get the number of successful posts."""
+        return self.posted_count
+    
+    def validate_content(self, image_path: str, caption: str) -> bool:
+        """
+        Validate content before posting.
+        
+        Args:
+            image_path: Path to image
+            caption: Post caption
+            
+        Returns:
+            bool: Validation status
+        """
+        logger.info("Validating content...")
+        
+        # Check image exists
+        import os
+        if not os.path.exists(image_path):
+            logger.error(f"Image not found: {image_path}")
+            return False
+        
+        # Check caption length
+        if len(caption) > 2200:
+            logger.error("Caption too long (max 2200 characters)")
+            return False
+        
+        if len(caption) < 1:
+            logger.error("Caption too short")
+            return False
+        
+        logger.info("Content validation passed")
+        return True
+
+
+# Example usage
+if __name__ == "__main__":
+    poster = InstagramPoster(use_sandbox=True)
+    
+    # Simulate posting
+    success = poster.post("test_image.jpg", "Test caption #test")
+    print(f"Post successful: {success}")
+    print(f"Total posts: {poster.get_post_count()}")</pre>
+            </div>
+
+            <h3>Test Files</h3>
+            <p>These files test your code to make sure everything works correctly.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    test_content_generator.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Tests for content_generator.py
+Run with: python -m pytest test_content_generator.py -v
+"""
+
+import pytest
+from content_generator import ContentGenerator
+
+
+class TestContentGenerator:
+    """Test cases for ContentGenerator class."""
+    
+    @pytest.fixture
+    def generator(self):
+        """Create a ContentGenerator instance for testing."""
+        return ContentGenerator()
+    
+    def test_initialization(self, generator):
+        """Test that ContentGenerator initializes correctly."""
+        assert generator is not None
+        assert len(generator.caption_templates) > 0
+        assert len(generator.topics) > 0
+        assert len(generator.emojis) > 0
+    
+    def test_generate_caption(self, generator):
+        """Test caption generation."""
+        caption = generator.generate_caption()
+        
+        assert isinstance(caption, str)
+        assert len(caption) > 0
+        assert len(caption) <= 500  # Reasonable length limit
+    
+    def test_generate_hashtags(self, generator):
+        """Test hashtag generation."""
+        hashtags = generator.generate_hashtags()
+        
+        assert isinstance(hashtags, str)
+        assert len(hashtags) > 0
+        assert "#" in hashtags
+        assert " " in hashtags  # Should have multiple hashtags
+    
+    def test_generate_hashtags_with_category(self, generator):
+        """Test hashtag generation with specific category."""
+        hashtags = generator.generate_hashtags("wellness")
+        
+        assert isinstance(hashtags, str)
+        assert len(hashtags) > 0
+    
+    def test_generate_content_batch(self, generator):
+        """Test batch content generation."""
+        batch = generator.generate_content_batch(3)
+        
+        assert isinstance(batch, list)
+        assert len(batch) == 3
+        
+        for item in batch:
+            assert "id" in item
+            assert "caption" in item
+            assert "hashtags" in item
+            assert isinstance(item["caption"], str)
+            assert isinstance(item["hashtags"], str)
+    
+    def test_caption_variety(self, generator):
+        """Test that captions have some variety."""
+        captions = [generator.generate_caption() for _ in range(5)]
+        unique_captions = set(captions)
+        
+        # Should have at least some variety
+        assert len(unique_captions) >= 2
+    
+    def test_hashtag_variety(self, generator):
+        """Test that hashtags have some variety."""
+        hashtags_list = [generator.generate_hashtags() for _ in range(5)]
+        unique_hashtags = set(hashtags_list)
+        
+        # Should have at least some variety
+        assert len(unique_hashtags) >= 2
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    test_image_generator.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Tests for image_generator.py
+Run with: python -m pytest test_image_generator.py -v
+"""
+
+import pytest
+import os
+from PIL import Image
+from image_generator import ImageGenerator
+
+
+class TestImageGenerator:
+    """Test cases for ImageGenerator class."""
+    
+    @pytest.fixture
+    def generator(self, tmp_path):
+        """Create an ImageGenerator instance for testing."""
+        output_dir = tmp_path / "test_output"
+        return ImageGenerator(str(output_dir))
+    
+    def test_initialization(self, generator):
+        """Test that ImageGenerator initializes correctly."""
+        assert generator is not None
+        assert generator.size == (1080, 1080)
+        assert os.path.exists(generator.output_dir)
+    
+    def test_create_image(self, generator):
+        """Test basic image creation."""
+        image_path = generator.create_image("Test")
+        
+        assert os.path.exists(image_path)
+        assert image_path.endswith('.jpg')
+        
+        # Verify image properties
+        with Image.open(image_path) as img:
+            assert img.size == (1080, 1080)
+            assert img.mode == 'RGB'
+    
+    def test_create_image_without_text(self, generator):
+        """Test image creation without text."""
+        image_path = generator.create_image()
+        
+        assert os.path.exists(image_path)
+        assert os.path.getsize(image_path) > 0
+    
+    def test_create_quote_image(self, generator):
+        """Test quote image creation."""
+        quote = "This is a test quote"
+        author = "Test Author"
+        
+        image_path = generator.create_quote_image(quote, author)
+        
+        assert os.path.exists(image_path)
+        assert os.path.getsize(image_path) > 0
+    
+    def test_create_quote_image_without_author(self, generator):
+        """Test quote image creation without author."""
+        quote = "This is a test quote"
+        
+        image_path = generator.create_quote_image(quote)
+        
+        assert os.path.exists(image_path)
+        assert os.path.getsize(image_path) > 0
+    
+    def test_multiple_images(self, generator):
+        """Test creating multiple images."""
+        paths = []
+        for i in range(3):
+            path = generator.create_image(f"Test {i}")
+            paths.append(path)
+            assert os.path.exists(path)
+        
+        # All paths should be unique
+        assert len(set(paths)) == 3
+    
+    def test_output_directory_creation(self, tmp_path):
+        """Test that output directory is created."""
+        output_dir = tmp_path / "new_output"
+        generator = ImageGenerator(str(output_dir))
+        
+        assert os.path.exists(output_dir)
+        assert os.path.isdir(output_dir)
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    test_instagram_poster.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Tests for instagram_poster.py
+Run with: python -m pytest test_instagram_poster.py -v
+"""
+
+import pytest
+import os
+import tempfile
+from instagram_poster import InstagramPoster
+
+
+class TestInstagramPoster:
+    """Test cases for InstagramPoster class."""
+    
+    @pytest.fixture
+    def poster(self):
+        """Create an InstagramPoster instance for testing."""
+        return InstagramPoster(use_sandbox=True)
+    
+    @pytest.fixture
+    def test_image(self):
+        """Create a temporary test image."""
+        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
+            # Create a minimal valid JPEG
+            f.write(b'\xff\xd8\xff\xd9')  # JPEG header and footer
+            return f.name
+    
+    def test_initialization(self, poster):
+        """Test that InstagramPoster initializes correctly."""
+        assert poster is not None
+        assert poster.use_sandbox is True
+        assert poster.get_post_count() == 0
+    
+    def test_sandbox_post(self, poster, test_image):
+        """Test posting in sandbox mode."""
+        caption = "Test caption #test"
+        success = poster.post(test_image, caption)
+        
+        assert success is True
+        assert poster.get_post_count() == 1
+    
+    def test_multiple_posts(self, poster, test_image):
+        """Test multiple posts."""
+        caption = "Test caption"
+        
+        # Post multiple times
+        for i in range(3):
+            success = poster.post(test_image, f"{caption} {i}")
+            assert success is True
+        
+        assert poster.get_post_count() == 3
+    
+    def test_validate_content_success(self, poster, test_image):
+        """Test content validation with valid content."""
+        caption = "Valid caption #test"
+        result = poster.validate_content(test_image, caption)
+        
+        assert result is True
+    
+    def test_validate_content_missing_image(self, poster):
+        """Test content validation with missing image."""
+        caption = "Test caption"
+        result = poster.validate_content("nonexistent.jpg", caption)
+        
+        assert result is False
+    
+    def test_validate_content_long_caption(self, poster, test_image):
+        """Test content validation with too long caption."""
+        caption = "a" * 3000  # Too long
+        result = poster.validate_content(test_image, caption)
+        
+        assert result is False
+    
+    def test_validate_content_empty_caption(self, poster, test_image):
+        """Test content validation with empty caption."""
+        caption = ""
+        result = poster.validate_content(test_image, caption)
+        
+        assert result is False
+    
+    def test_post_count_increment(self, poster, test_image):
+        """Test that post count increments correctly."""
+        initial_count = poster.get_post_count()
+        poster.post(test_image, "Test")
+        
+        assert poster.get_post_count() == initial_count + 1
+    
+    def teardown_method(self, test_image):
+        """Clean up test image."""
+        if os.path.exists(test_image):
+            os.unlink(test_image)
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    conftest.py
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>#!/usr/bin/env python3
+"""
+Pytest configuration file
+This file configures pytest settings and shared fixtures
+"""
+
+import pytest
+import logging
+
+
+def pytest_configure(config):
+    """Configure pytest with custom settings."""
+    # Configure logging for tests
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+
+
+@pytest.fixture(scope="session")
+def logger():
+    """Provide a logger fixture for tests."""
+    return logging.getLogger("test_logger")
+
+
+# Add custom markers
+def pytest_collection_modifyitems(config, items):
+    """Add custom markers to tests."""
+    for item in items:
+        # Mark all tests with integration or unit
+        if "test_" in item.nodeid:
+            if "integration" in item.nodeid.lower():
+                item.add_marker(pytest.mark.integration)
+            else:
+                item.add_marker(pytest.mark.unit)
+
+
+# Configure pytest command line options
+def pytest_addoption(parser):
+    """Add custom command line options."""
+    parser.addoption(
+        "--runslow", action="store_true", default=False, help="run slow tests"
+    )
+    parser.addoption(
+        "--integration", action="store_true", default=False, help="run integration tests"
+    )
+
+
+def pytest_collection_modifyitems(config, items):
+    """Skip tests based on command line options."""
+    if config.getoption("--runslow"):
+        # --runslow given in cli: do not skip slow tests
+        return</pre>
+            </div>
+
+            <h3>Configuration Files</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    requirements.txt
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>pillow>=9.0.0
+pytest>=7.0.0
+python-dotenv>=0.20.0</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    .env.example
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre># Instagram API Configuration
+INSTAGRAM_ACCESS_TOKEN=your_access_token_here
+INSTAGRAM_APP_ID=your_app_id_here
+INSTAGRAM_APP_SECRET=your_app_secret_here
+
+# OpenAI API (for AI features)
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Other API Keys
+UNSPLASH_ACCESS_KEY=your_unsplash_key_here</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    .gitignore
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre># Environment variables
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+
+# Output files
+output/
+*.jpg
+*.png
+*.jpeg
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log</pre>
+            </div>
+        </div>
+
+        <div class="section" id="testing">
+            <h2>🧪 Testing Guide</h2>
+            <p>Run these commands to test your application:</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    Run All Tests
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre>python -m pytest -v</pre>
+            </div>
+
+            <div class="success">
+                <strong>✅ All tests should pass!</strong> If you get errors, check that you've installed all requirements and saved files with correct names.
+            </div>
+        </div>
+
+        <div class="section" id="usage">
+            <h2>🚀 How to Use</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Run the Application</strong>
+                <div class="code-block">
+                    <div class="code-header">
+                        Command
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre>python main.py</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Check Output</strong>
+                <p>The application will create an image in the <code>output/</code> folder and simulate posting to Instagram.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Customize</strong>
+                <p>Edit the files to add your own templates, colors, and content.</p>
+            </div>
+        </div>
+
+        <div class="section" id="troubleshooting">
+            <h2>🔧 Troubleshooting</h2>
+            
+            <h3>Common Issues:</h3>
+            
+            <div class="warning">
+                <strong>ModuleNotFoundError</strong>
+                <p>Run: <code>pip install -r requirements.txt</code></p>
+            </div>
+
+            <div class="warning">
+                <strong>Image generation fails</strong>
+                <p>Make sure you have PIL/Pillow installed: <code>pip install pillow</code></p>
+            </div>
+
+            <div class="warning">
+                <strong>Tests fail</strong>
+                <p>Run tests individually: <code>python -m pytest test_content_generator.py -v</code></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 Next Steps</h2>
+            <ul>
+                <li>Add real Instagram API integration</li>
+                <li>Create a web interface with Flask</li>
+                <li>Add scheduling functionality</li>
+                <li>Integrate with other APIs (Unsplash, OpenAI)</li>
+                <li>Deploy to a cloud platform</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; color: white; margin: 40px 0; padding: 20px;">
+            <p>Made with ❤️ for learning Python</p>
+            <p>Happy Coding! 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                // Show copied feedback
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy code. Please select and copy manually.');
+            });
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
